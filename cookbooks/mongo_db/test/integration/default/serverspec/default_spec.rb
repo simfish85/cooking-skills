@@ -1,9 +1,11 @@
 require 'spec_helper'
 
-describe 'mongo_db::default' do
-  # Serverspec examples can be found at
-  # http://serverspec.org/resource_types.html
-  it 'does something' do
-    skip 'Replace this with meaningful tests'
+# Ensure that the mongod service has been successfully installed and is running
+describe 'the mongod service' do
+  it 'is enabled' do
+    expect(service 'mongod').to be_enabled
+  end
+  it 'is running' do
+    expect(service 'mongod').to be_running
   end
 end
