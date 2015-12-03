@@ -18,3 +18,10 @@ package 'mongodb-org'
 service 'mongod' do
   action [:enable, :start]
 end
+
+cookbook_file node['mongo_db']['database']['seed_file'] do
+  source 'db_seed.json'
+  mode '0644'
+  owner 'mongodb'
+  group 'mongodb'
+end

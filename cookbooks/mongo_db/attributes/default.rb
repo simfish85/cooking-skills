@@ -1,0 +1,1 @@
+default['mongo_db']['database']['seed_file'] ='/tmp/seed-db.json'

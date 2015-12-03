@@ -7,7 +7,7 @@
 require 'spec_helper'
 
 describe 'mongo_db::default' do
-  context 'on Ubuntu ' do
+  context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '14.04')
       runner.converge(described_recipe)
@@ -28,5 +28,12 @@ describe 'mongo_db::default' do
     it 'starts the mongodb service' do
       expect(chef_run).to start_service 'mongod'
     end
+
+  	it 'creates the seed file' do
+   	  expect(chef_run).to create_cookbook_file '/tmp/seed-db.json' 
+  	end
   end
 end
+
+
+

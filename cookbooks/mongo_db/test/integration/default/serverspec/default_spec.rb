@@ -9,3 +9,13 @@ describe 'the mongod service' do
     expect(service 'mongod').to be_running
   end
 end
+
+describe 'the database seed file' do
+  let(:db_seed) { '/tmp/seed-db.json' }
+  it 'exists' do
+    expect(file db_seed).to exist
+  end
+  it 'is a file' do
+    expect(file db_seed).to be_file
+  end
+end
