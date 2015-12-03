@@ -8,6 +8,11 @@ require 'spec_helper'
 
 describe 'mongo_db::default' do
   context 'When all attributes are default, on an unspecified platform' do
+  	before do
+  	  stub_command("mongoimport --db jobs--collection candidates --drop --file /tmp/seed-db.json").and_return(true)
+  	  stub_command("mongo --eval \"printjson(db.adminCommand('listDatabases'));\" | grep jobs").and_return(true)
+  	end
+
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '14.04')
       runner.converge(described_recipe)

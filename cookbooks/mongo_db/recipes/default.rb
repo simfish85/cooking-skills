@@ -25,3 +25,12 @@ cookbook_file node['mongo_db']['database']['seed_file'] do
   owner 'mongodb'
   group 'mongodb'
 end
+
+execute 'initialize database' do
+  command "mongoimport --db #{node['mongo_db']['database']['name']} --collection #{node['mongo_db']['database']['collection']} --drop --file #{node['mongo_db']['database']['seed_file']}"
+  not_if  "mongo --eval \"printjson(db.adminCommand('listDatabases'));\" | grep #{node['mongo_db']['database']['name']}"
+end
+
+file node['mongo_db']['database']['seed_file'] do 
+	action :delete
+end

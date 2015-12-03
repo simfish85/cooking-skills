@@ -11,11 +11,14 @@ describe 'the mongod service' do
 end
 
 describe 'the database seed file' do
-  let(:db_seed) { '/tmp/seed-db.json' }
-  it 'exists' do
-    expect(file db_seed).to exist
-  end
-  it 'is a file' do
-    expect(file db_seed).to be_file
+  it 'was imported successfully' do
+    expect(command("mongo --eval \"printjson(db.adminCommand('listDatabases'));\"").stdout).to match /jobs/
   end
 end
+
+describe 'the imported database' do
+  it 'contains expected entries' do
+  	expect(command("mongo --eval \"printjson(db.getSiblingDB('jobs').candidates.findOne({name: 'Simon Fisher'}));\"").stdout).not_to match /null/
+  end
+end
+
